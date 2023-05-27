@@ -9,6 +9,14 @@ const port = 8000;
 //use express router 
 app.use('/', require('./routes'));
 
+
+// 4th strp...setting up the view engine using app.set documentry
+app.set('view engine', 'ejs');
+// ./ means it tis inte neighbouring folder
+app.set('views', './views');
+
+
+
 //2nd step
 app.listen(port ,function(err){
     //if there is error 
