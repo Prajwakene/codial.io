@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>
+            <%= title%>
+        </title>
+        <link rel="stylesheet" href="/css/layout.css">
+        <!-- for steps 7 in the index.js whenever  there is something called as link tag or script tag in my body it
+             automatically put it here -->
+        <%- style %>
+    </head>
+    
+    <body>
+
+        <%-  include('_header'); %>
+<!-- body is predefine in the express-ejs-library -->
+        <%- body%>
+
+        <%-  include('_footer'); %>
+
+        <%- script %>
+
+    </body>
+</html>
