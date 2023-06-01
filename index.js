@@ -1,5 +1,9 @@
 //1st step
 const express = require('express');
+
+// 9th step
+const cookieParser = require('cookie-parser'); 
+
 const app = express();
 
 //when we deploy it to the server this port number will be 80 
@@ -7,6 +11,18 @@ const port = 8000;
 
 // 5th step....accessing the express-ejs-layouts  library 
 const expressLayouts = require('express-ejs-layouts');
+
+
+//8th step...importing
+
+const db = require('./config/mongoose')
+
+
+//10th step 
+app.use(express.urlencoded());
+
+//setting up th e cookie parser
+app.use(cookieParser());
 
 //7th step...extract style and sripts from sub page in to the layout 
 app.set('layout extractStyles', true);
