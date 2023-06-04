@@ -6,6 +6,9 @@
         <link rel="stylesheet" href="/css/layout.css">
         <!-- for steps 7 in the index.js whenever  there is something called as link tag or script tag in my body it
              automatically put it here -->
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
+
         <%- style %>
     </head>
     
@@ -13,8 +16,11 @@
 
         <%-  include('_header'); %>
 <!-- body is predefine in the express-ejs-library -->
-        <%- body%>
 
+    <main id="layout-main">
+        <%- body%>
+    </main>
+        
         <%-  include('_footer'); %>
 
         <%- script %>

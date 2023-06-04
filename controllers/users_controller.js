@@ -1,4 +1,5 @@
 //importing 
+const { ConnectionStates } = require('mongoose');
 const User = require('../models/user')
 
 
@@ -12,14 +13,19 @@ module.exports.profile = function(req, res){
 //2nd step..adding action for the sign up and sign in
 //render the signup page
 module.exports.signUp = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_up',{
         title:"codial  | Sign up"
     });
 }
 
 //render the signin page
-
 module.exports.signIn = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_in',{
         title:"codial  | Sign in"
     });
@@ -30,6 +36,7 @@ module.exports.signIn = function(req,res){
 //get the sign up data
 
 module.exports.create = function (req, res){
+   
     // checking whether password and confirm password are equal or not if not redirect back to the sign up page
     if(req.body.password != req.body.comfirm_password){
         return res.redirect('back');
@@ -61,10 +68,19 @@ module.exports.create = function (req, res){
     
 };
 
-
-
 //sign In and create the session for the user
 module.exports.createSession = function (req, res){
-    //establishing the idetity for the user   
-     
+    //establishing the idetity for the user
+    return res.redirect('/')  
+};
+
+
+//crewting an ction for the sign out
+module.exports.destroySession = function(req, res, next){
+    req.logout(function(err){
+        if(err){
+            return next(err);
+        }
+    });
+    return res.redirect('/')
 }
