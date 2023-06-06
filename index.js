@@ -23,7 +23,7 @@ const session = require('express-session');
 //we need passport and the localstategy  that we are are setting
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
-// const { connect, mongo } = require('mongoose');
+const { connect, mongo } = require('mongoose');
 
 //14th step ...setting up the mongo store for cookie sesion
 const mongoStore =require('connect-mongo')(session);

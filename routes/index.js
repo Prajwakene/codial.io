@@ -13,6 +13,9 @@ router.get('/', homeController.home);
 //acessing the user route 
 router.use('/users', require('./users'));
 
+// calling the post route
+router.use('/posts', require('./posts'))
+
 //for any further route , access from here
 // router.use('/routerName', require('./routerfile'));
 
