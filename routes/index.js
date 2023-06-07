@@ -22,4 +22,3 @@ router.use('/posts', require('./posts'))
 
 //export route
 module.exports= router;
-

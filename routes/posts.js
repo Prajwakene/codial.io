@@ -3,6 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
+//we are telling passport to authenticate user
+const passport =  require('passport')
+
 const postController = require('../controllers/posts_controller');
 
 
@@ -10,7 +13,7 @@ const postController = require('../controllers/posts_controller');
 
 
 //accessing 
-router.post('/create', postController.create);
+router.post('/create',passport.checkAuthentication, postController.create);
 
 //exporting..
 module.exports =router;

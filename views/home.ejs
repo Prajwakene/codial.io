@@ -1,14 +1,37 @@
 
 <h1>
-    Codeial / <%= title %>
+    Codial / <%= title %>
 </h1>
 
 <section id="feed-posts">
-    <h4>Posts</h4>
+    <h3>Posts</h3>
+    <% if(locals.user){%>
     <!-- corresponds to schema -->
     <!-- every action is attched to bellow route  /posts/create-->
     <form action="/posts/create" id="new-post-form" method="POST">
         <textarea name="content" cols="30" rows="3" placeholder="Type Here..."></textarea>
         <input type="submit" value="Post">
     </form>
+    <% } %>
+    <div id="posts-list-container">
+        <ul>
+            <!-- using for loop -->
+            <% for(post of posts){ %> 
+                <!-- A list item for every post -->
+                <li>
+                    <p>
+                        <%= post.content %>
+                        <!-- showing which user has posted this  -->
+                             <br>
+                        <small>
+                             <%= post.user.name %>
+                        </small>
+                    </p>
+                    <div class="post-comments">
+                        
+                    </div>
+                </li>
+            <% } %>
+        </ul>
+    </div>
 </section>

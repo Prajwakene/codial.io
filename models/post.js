@@ -13,7 +13,14 @@ const postSchema = new mongoose.Schema({
         //type is reference
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
-    }
+    },
+    // include the array of ids of all comments in this post schema itself
+    comments:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'comment'
+        }
+    ]
 },{
     //adding TINMESTAMP ...it is which automatically  interoduces two fields ,,,created at and updated at 
     timestamps:true
