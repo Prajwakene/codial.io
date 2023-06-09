@@ -18,5 +18,7 @@ module.exports.create = function(req, res){
         //else
         return res.redirect('back')
     });
-}
+};
+
+//creating an action o delete a post
 
