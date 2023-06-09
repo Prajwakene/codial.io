@@ -9,13 +9,13 @@
     <!-- corresponds to schema -->
     <!-- every action is attched to bellow route  /posts/create-->
     <form action="/posts/create" id="new-post-form" method="POST">
-        <textarea name="content" cols="30" rows="3" placeholder="Type Here..."></textarea>
+        <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required></textarea>
         <input type="submit" value="Post">
     </form>
     <% } %>
     <div id="posts-list-container">
         <ul>
-            <% for(post of posts) { %>    
+            <% for(post of Posts) { %>    
                 <li>
                     <p>
                         <%= post.content %>
@@ -35,6 +35,22 @@
                                 <input type="submit" value="Add comments">
                             </form>
                             <% } %>
+                            <!-- Showing the comments -->
+                            <div class="post=comment-list">
+                                <ul id="post-comments-<%= post._id%>">
+                                    <% for (comment of post.comments){ %>
+                                        <p>
+                                            <%= comment.content %>
+                                            <br>
+                                            <small>
+                                                <%= comment.user.name%>
+
+                                            </small>
+                                        </p>
+                                        <% } %>
+
+                                </ul>
+                            </div>
                     </div>
                 </li>
             <% } %>

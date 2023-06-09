@@ -17,7 +17,16 @@ module.exports.home = function(req, res){
 
 //  finding all the posts ..and populating the user of each posts...then callback
 //till .exec this is query too populate ...checkout in mongoose library
-    Post.find({}).populate('user').exec(function(err, posts){
+     Post.find({})
+    .populate('user')
+    //pre-loading the comments and the user of the comments
+    .populate({
+        path:'comments',
+        populate: {
+            path:'user'
+        }
+    })
+    .exec(function(err, posts){
         return res.render('home', {
             title : "Codial | Home",
             posts: posts
