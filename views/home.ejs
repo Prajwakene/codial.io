@@ -15,9 +15,15 @@
     <% } %>
     <div id="posts-list-container">
         <ul>
-            <% for(post of Posts) { %>    
+            <% for(post of posts) { %>    
                 <li>
                     <p>
+                        <!-- id the user is signed in && if the user is signed in and and createed post -->
+                        <% if(locals.user && locals.user.id == post.user.id){ %>
+                        <small>
+                            <a href="/posts/destroy/<%= post.id %>"> X </a>
+                        </small>
+                        <% } %>
                         <%= post.content %>
                         <br>
                         <small>
@@ -40,6 +46,12 @@
                                 <ul id="post-comments-<%= post._id%>">
                                     <% for (comment of post.comments){ %>
                                         <p>
+                                            <!-- //creatng a delete button to delete a comment -->
+                                            <% if(locals.user && locals.user.id == comment.user.id){ %>
+                                                <small>
+                                                    <a href="/comments/destroy/<%= comment.id %>"> X </a>
+                                                </small>
+                                                <% } %>
                                             <%= comment.content %>
                                             <br>
                                             <small>

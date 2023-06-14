@@ -20,8 +20,27 @@ module.exports.create = function(req, res){
 
                 post.save();
                 res.redirect('/')
-                
             })
         }
     });
 };
+
+//we need to delete a comment 
+module.exports.destroy = function(req, res){
+    Comment.findById(req.params.id, function(err, comment){
+        //check if the comment actually available or not
+        if(comment.user == req.user.id){
+            //before deleting a comment we nned to fetch the post id ,because we need to go inside that post and then delete it 
+            let postId = comment.post;
+            
+            comment.remove();
+            //if comment was there the post must be there
+            //we need to pull out the comment from the list of the list of comment
+            Post.findByIdAndUpdate(postId, { $pull:{comments:req.params.id}}, function(err, post){
+                return res.redirect('back');
+            })
+        }else{
+            return res.redirect('back');
+        }
+    })
+}

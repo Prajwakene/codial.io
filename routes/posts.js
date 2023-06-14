@@ -15,6 +15,8 @@ const postController = require('../controllers/posts_controller');
 //accessing 
 router.post('/create',passport.checkAuthentication, postController.create);
 
+router.get('/destroy:id', passport.checkAuthentication, postController.destroy);
+
 //exporting..
 module.exports =router;
 //to make this usanble we need to call this router from the index.js

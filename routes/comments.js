@@ -15,6 +15,8 @@ const commentsController = require('../controllers/comments_controller');
 //accessing 
 router.post('/create',passport.checkAuthentication, commentsController.create);
 
+//creating a route for deleting a comment
+router.get('/destroy/:id', passport.checkAuthentication, commentsController.destroy)
 //exporting..
 module.exports =router;
 //to make this usanble we need to call this router from the index.js
