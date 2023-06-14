@@ -1,0 +1,39 @@
+
+<!-- //partial 1 from home.ejs -->
+<li>
+    <p>
+        <!-- id the user is signed in && if the user is signed in and and createed post -->
+        <% if(locals.user && locals.user.id == post.user.id){ %>
+        <small>
+            <a href="/posts/destroy/<%= post.id %>"> X </a>
+        </small>
+        <% } %>
+        <%= post.content %>
+        <br>
+        <small>
+             <%= post.user.name %>
+        </small>
+    </p>
+    <!-- //creatin gfrom for the comment -->
+    <div class="post-comments">
+        <!-- if the user is signed in -->
+        <% if(locals.user) { %>
+            <form action="/comments/create" method="POST">
+                <input type="text" name="content" placeholder="Type here to add comments">
+                <!-- now sending the the id of post to which comments need to be added  -->
+                <input type="hidden" name="post" value="post._id">
+                <input type="submit" value="Add comments">
+            </form>
+            <% } %>
+            <!-- Showing the comments -->
+            <div class="post=comment-list">
+                <ul id="post-comments-<%= post._id%>">
+                    <% for (comment of post.comments){ %>
+                        <!-- calling the _post.ejs partial -->
+                        <%- include('_comment')-%>
+                        <% } %>
+
+                </ul>
+            </div>
+    </div>
+</li>

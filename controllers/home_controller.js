@@ -27,6 +27,7 @@ module.exports.home = function(req, res){
         }
     })
     .exec(function(err, posts){
+        
         return res.render('home', {
             title : "Codial | Home",
             posts: posts
