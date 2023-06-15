@@ -9,7 +9,10 @@ const passport = require('passport');
 const usersController = require('../controllers/users_controller');
 
 // mapping the route user action
-router.get ('/profile',passport.checkAuthentication, usersController.profile);
+router.get('/profile/:id',passport.checkAuthentication, usersController.profile);
+
+// mapping router to the update action
+router.post('/update/:id', passport.checkAuthentication, usersController.update);
 
 //for sign up
 router.get('/sign-up',usersController.signUp);

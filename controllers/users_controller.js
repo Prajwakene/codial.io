@@ -7,8 +7,33 @@ const User = require('../models/user')
 
 //export an action
 module.exports.profile = function(req, res){
-    return res.end('<h1>User profile</h1>');
-}
+    // locatig a user
+    User.findById(req.params.id, function(err, user){
+        return res.end('user_profile',{
+            title:'User Profile',
+            profile_user:user
+        })
+    });
+};
+
+
+//creating an action for the updating the user
+module.exports.update = function(req, res){
+    //if any one wants to fiddle with my webpage he shoulld not
+    if(req.user.id === req.params.id){
+        // { name:req.body.name, email:req.body.email} => instrad of req.body
+        User.findByIdAndUpdate(req.params.id, req.body ,function(err, user_id){
+            return res.redirect('back')
+        });
+    }else{
+        //if anyone is trying to do the chages in the html code then this error would show
+        //common http error
+        // 200 =>success
+        // 500 => internal server error
+        // 401 => unauthorized
+        res.status(401).send('unathorized');
+    };
+};
 
 //2nd step..adding action for the sign up and sign in
 //render the signup page
