@@ -8,10 +8,11 @@ module.exports.home = async function(req, res){
 try{
     //  finding all the posts ..and populating the user of each posts...then callback
 //till .exec this is query too populate ...checkout in mongoose library
-let posts = await Post.find({})
-.populate('user')
+    let posts = await Post.find({})
+    .sort('-createdAt')
+    .populate('user')
 //pre-loading the comments and the user of the comments
-.populate({
+    .populate({
     path:'comments',
     populate: {
         path:'user'

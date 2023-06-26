@@ -87,6 +87,7 @@ module.exports.create = function (req, res){
         //finaally if the user is already present redirect back to th sign up page
         else{
             return res.redirect('back');
+            
         }
         
     });
@@ -95,17 +96,16 @@ module.exports.create = function (req, res){
 
 //sign In and create the session for the user
 module.exports.createSession = function (req, res){
+    req.flash('success', 'Logged in successfully')
     //establishing the idetity for the user
     return res.redirect('/')  
 };
 
 
 //crewting an ction for the sign out
-module.exports.destroySession = function(req, res, next){
-    req.logout(function(err){
-        if(err){
-            return next(err);
-        }
-    });
+module.exports.destroySession = function(req, res){
+    req.logout();
+    req.flash('success', ' You have logged out')
+
     return res.redirect('/')
 }

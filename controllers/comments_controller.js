@@ -3,31 +3,35 @@ const Comment =require('../models/comment');
 const Post = require('../models/post');
 
 //creating comment over a post 
-module.exports.create = function(req, res){
+module.exports.create = async function(req, res){
     //for that finding if the post is exixt or not 
     // if we find th epost handling the error using callback function
-    Post.findById(eq.body.Post, function(err,post){
-        if(post){
-            Comment.create({
-                content:req.body.content,
-                post:req.body.post,
-                user:req.user._id
-            },function(err, comment){
-                //handle err
-                post.comments.push(comment);
-                //whenever we update something we need to call save after it
-                //save will tell th DB that it is the final version ,so block it 
+    try{
+        let post= await Post.findById(req.body.Post)
+            if(post){
+                let comment = await Comment.create({
+                    content:req.body.content,
+                    post:req.body.post,
+                    user:req.user._id
+                });
+                    //handle err
+                    post.comments.push(comment);
+                    //whenever we update something we need to call save after it
+                    //save will tell th DB that it is the final version ,so block it 
+                    post.save();
 
-                post.save();
-                res.redirect('/')
-            })
-        }
-    });
+                    res.redirect('/')
+            }
+    }catch(err){
+        console.log('Error', err);
+        return;
+    }
 };
 
 //we need to delete a comment 
-module.exports.destroy = function(req, res){
-    Comment.findById(req.params.id, function(err, comment){
+module.exports.destroy =async function(req, res){
+    try{
+        let comment= await Comment.findById(req.params.id);
         //check if the comment actually available or not
         if(comment.user == req.user.id){
             //before deleting a comment we nned to fetch the post id ,because we need to go inside that post and then delete it 
@@ -36,11 +40,14 @@ module.exports.destroy = function(req, res){
             comment.remove();
             //if comment was there the post must be there
             //we need to pull out the comment from the list of the list of comment
-            Post.findByIdAndUpdate(postId, { $pull:{comments:req.params.id}}, function(err, post){
+           let post= await  Post.findByIdAndUpdate(postId, { $pull:{comments:req.params.id}});
                 return res.redirect('back');
-            })
+            
         }else{
             return res.redirect('back');
         }
-    })
+    }catch(err){
+        console.log('Error',err);
+        return;
+    }
 }

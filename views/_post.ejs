@@ -1,11 +1,11 @@
 
 <!-- //partial 1 from home.ejs -->
-<li>
+<li id="post-<%=post._%>">
     <p>
         <!-- id the user is signed in && if the user is signed in and and createed post -->
         <% if(locals.user && locals.user.id == post.user.id){ %>
         <small>
-            <a href="/posts/destroy/<%= post.id %>"> X </a>
+            <a class="delete-post-button" href="/posts/destroy/<%= post.id %>"> X </a>
         </small>
         <% } %>
         <%= post.content %>

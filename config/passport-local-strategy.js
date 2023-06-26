@@ -12,15 +12,16 @@ const User = require('../models/user');
 //we need to tell passport to use th local strategy 
 //authentication using passport
 passport.use(new LocalStrategy({
-    usernameField:'email'
+    usernameField:'email',
+    passReqToCallback:true
     },
 
     //done is call abck functin 
-    function(email, password, done){
+    function(req,email, password, done){
 //find the user and establish the identity
         user.findOne({email:email}, function(err, user){
             if(err){
-                console.log('error in finding the --> passport');
+                req.flash('error',err);
                 //done willl take th etewo argument i.e 1)err and 2)something else  ...we go with th first one we pass on err
                 //this will return an error to passportf
                 return done(err);
@@ -28,7 +29,7 @@ passport.use(new LocalStrategy({
             }
             
             if(!user || user.password != password){
-                console.log('Invalid username/password');
+                req.flash('error','Invalid Username/Password')
                 return done(null, false)
             }//if user is found
             return done(null, user) ;
