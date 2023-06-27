@@ -1,7 +1,10 @@
 //importing 
 const { ConnectionStates } = require('mongoose');
-const User = require('../models/user')
+const User = require('../models/user');
 
+//impoting to deelet ea avatar 
+const fs = require('fs');
+const path = require('path');
 
 // this controller is going to control the many controller
 
@@ -18,21 +21,54 @@ module.exports.profile = function(req, res){
 
 
 //creating an action for the updating the user
-module.exports.update = function(req, res){
-    //if any one wants to fiddle with my webpage he shoulld not
+//coverting it to the async await 
+module.exports.update = async function(req, res){
+    // //if any one wants to fiddle with my webpage he shoulld not
+    // if(req.user.id === req.params.id){
+    //     // { name:req.body.name, email:req.body.email} => instrad of req.body
+    //     User.findByIdAndUpdate(req.params.id, req.body ,function(err, user_id){
+    //         return res.redirect('back')
+    //     });
+    // }else{
+    //     //if anyone is trying to do the chages in the html code then this error would show
+    //     //common http error
+    //     // 200 =>success
+    //     // 500 => internal server error
+    //     // 401 => unauthorized
+    //     res.status(401).send('unathorized');
+    // };
     if(req.user.id === req.params.id){
-        // { name:req.body.name, email:req.body.email} => instrad of req.body
-        User.findByIdAndUpdate(req.params.id, req.body ,function(err, user_id){
-            return res.redirect('back')
-        });
+        try{
+            //1 find the user
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){
+                    console.log('*******Multer Error: ',err)
+                }
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                //if there is file we are uploading it 
+                if(req.file){
+                    //if the user an already a avatar asssociated with it delete it 
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar))
+                    }
+                    //this is savaing the path of the uploaded file in to the avatar field in the user 
+                    user.avatar = User.avatarPath + '/' + req.file.filename
+                }
+                avatar.save();
+                return res.redirect('back');
+            });
+
+        }catch(err){
+            req.flash('error',err);
+            return res.redirect('back');
+        }
     }else{
-        //if anyone is trying to do the chages in the html code then this error would show
-        //common http error
-        // 200 =>success
-        // 500 => internal server error
-        // 401 => unauthorized
-        res.status(401).send('unathorized');
-    };
+        req.flash('error', 'unauthorized!');
+        return res.status(401).send('unauthorized');
+    }
 };
 
 //2nd step..adding action for the sign up and sign in

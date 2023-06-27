@@ -18,7 +18,7 @@ const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 
 
-app.use(sassMiddleware.middleware({
+app.use(sassMiddleware({
     src: './assets/scss',
     dest: './assets/css',
     debug: true,
@@ -31,6 +31,9 @@ app.use(cookieParser());
 
 app.use(express.static('./assets'));
 
+//joining th e patrh
+//make the uploads path avbailable to the browser
+app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(expressLayouts);
 // extract style and scripts from sub pages into the layout
 app.set('layout extractStyles', true);

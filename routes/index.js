@@ -22,6 +22,8 @@ router.use('/comment', require('./comments'));
 //for any further route , access from here
 // router.use('/routerName', require('./routerfile'));
 
+//for using the index file under the api folder in same router folder
+router.use('/api', require('./api'));
 
 //export route
 module.exports= router;
