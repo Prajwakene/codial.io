@@ -40,7 +40,7 @@
             <% if(flash.success && flash.success.length > 0) { %>
                 new Noty({
                     theme:'relax',
-                    text: "<% flash.success%>",
+                    text: "<%= flash.success%>",
                     type: 'success',
                     layout:'topRight',
                     timeout: 1500
@@ -51,7 +51,7 @@
                 <% if(flash.error && flash.error.length > 0) { %>
                 new Noty({
                     theme:'relax',
-                    text: "<% flash.error%>",
+                    text: "<%= flash.error%>",
                     type: 'error',
                     layout:'topRight',
                     timeout: 1500

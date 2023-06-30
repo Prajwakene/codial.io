@@ -12,6 +12,11 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+// G4
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
+
+// importing passport-JWT for authorisation
+const passportJWT = require('./config/passport-jwt-strategy');
 const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');

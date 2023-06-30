@@ -4,7 +4,7 @@
 <div id="home-container">
     <section id="feed-posts">
         <h4>Posts</h4>
-        <% if(locals.user){%>
+        <% if(locals.user){ %>
         <!-- corresponds to schema -->
         <!-- every action is attched to bellow route  /posts/create-->
         <form action="/posts/create" id="new-post-form" method="POST">
@@ -27,8 +27,8 @@
         <% for(u of all_users) { %>
             <p>
                 <!-- /changing te routes -->
-                displaying the userlist between a tag
-              <a href="/users/profile/<%= u.id>"><%= u.name></a>  
+                <!-- displaying the userlist between a tag -->
+              <a href="/users/profile/<%= u.id %>"><%= u.name %></a>  
             </p>
         <% }%>  
     </section>

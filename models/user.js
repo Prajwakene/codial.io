@@ -58,7 +58,7 @@ userSchema.statics.avatarPath =AVATAR_PATH;
 
 
 //telling mongoose that this is the model 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 //finaly we need to exports that
 module.exports = User;

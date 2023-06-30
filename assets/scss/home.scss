@@ -1,4 +1,4 @@
-#home-cotnainer{
+#home-container{
     display: flex;
 
     #feed-posts{
@@ -8,7 +8,7 @@
     #user-friends{
         width: 30%;
         padding: 10px;
-        border-left: 1px,solid,lightgrey;
-        height: 100%;
+        border-left: 1px solid rgb(244, 241, 241);
+        height: 100vh;
     }
 }

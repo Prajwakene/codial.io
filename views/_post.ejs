@@ -1,6 +1,6 @@
 
 <!-- //partial 1 from home.ejs -->
-<li id="post-<%=post._%>">
+<li id="post-<%=post._id%>">
     <p>
         <!-- id the user is signed in && if the user is signed in and and createed post -->
         <% if(locals.user && locals.user.id == post.user.id){ %>
@@ -27,10 +27,11 @@
             <% } %>
             <!-- Showing the comments -->
             <div class="post=comment-list">
-                <ul id="post-comments-<%= post._id%>">
+                <ul id="post-comments-<%= post._id %>">
                     <% for (comment of post.comments){ %>
                         <!-- calling the _post.ejs partial -->
-                        <%- include('_comment')-%>
+                        <%- include('_comment')%>
+                        <!-- <%- include('_comment')-%> -->
                         <% } %>
 
                 </ul>

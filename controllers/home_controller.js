@@ -1,23 +1,23 @@
 const Post = require('../models/post')
 
 //impoeting User...1st time using user
-const user = require('../models/user')
+const User = require('../models/user')
 // exporting a functon which is publically acess to my routes
 module.exports.home = async function(req, res){
 //    handling the error
 try{
+    let posts = await Post.find({})
+        .sort('-createdAt')
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        });
     //  finding all the posts ..and populating the user of each posts...then callback
 //till .exec this is query too populate ...checkout in mongoose library
-    let posts = await Post.find({})
-    .sort('-createdAt')
-    .populate('user')
-//pre-loading the comments and the user of the comments
-    .populate({
-    path:'comments',
-    populate: {
-        path:'user'
-    }
-});
+     
 //executimg
 // .exec(function(err, posts){
  //finding all the user
