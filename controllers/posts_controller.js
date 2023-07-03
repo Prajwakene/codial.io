@@ -26,6 +26,8 @@ module.exports.create = async function(req, res){
     }
 
     req.flash('success','Post Published!');
+    //after postin gwe need make the input box empty fr the next post 
+    //   need to implement
     return res.redirect('back');
 
     }catch(err){

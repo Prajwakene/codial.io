@@ -1,11 +1,14 @@
 //importing
 const Comment =require('../models/comment');
 const Post = require('../models/post');
+// importing mailer
+const commentsMailer = require('../mailers/commetns_mailer');
 
 //creating comment over a post 
 module.exports.create = async function(req, res){
     //for that finding if the post is exixt or not 
     // if we find th epost handling the error using callback function
+    //after the comment is made the email would be send technically.
     try{
         let post= await Post.findById(req.body.Post)
             if(post){
@@ -19,6 +22,22 @@ module.exports.create = async function(req, res){
                     //whenever we update something we need to call save after it
                     //save will tell th DB that it is the final version ,so block it 
                     post.save();
+
+                    // populating the user every time
+                    comment = await comment.populate('user', 'name email').execPopulate();
+                    //calling mailer
+                    commentsMailer.newComment(comment);
+
+                    if(req.xhr){
+                        //similar to comment to fertch the user id's
+                        return res.status(200).json({
+                            data: {
+                                comment: comment
+                            },
+                            message: "Post Created!"
+                        });
+                    }
+                    req.flash('success', 'comment published!')
 
                     res.redirect('/')
             }
