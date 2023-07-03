@@ -6,7 +6,7 @@ const ejs = require('ejs');
 //importing path
 const path = require(path);
 
-//defining transportar it is object willl attch it to the node mailer
+// defining transportar it is object willl attch it to the node mailer
 let transportar = nodemailer.createTransport({
     service: 'gmail',
     host:'smtp.gmail.com',
