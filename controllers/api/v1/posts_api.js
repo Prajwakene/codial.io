@@ -44,7 +44,7 @@ module.exports.destroy = async function(req, res){
                     return res.json(401, {
                         messege:"You can not delete this post!!"
                     });
-                }
+                };
     }catch(err){
         return res.json(500, {
             messege:"Internal Server Error"
