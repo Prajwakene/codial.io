@@ -1,3 +1,4 @@
+
 {
     //method to submit the data for the new post using AJAX
     let createpost =function(){
@@ -9,7 +10,7 @@
 
             //submitting manually
             $.ajax({
-                type:'post',
+                type:'post',          
                 url:'/posts/create',
                 //serialize will convert the form  data into JSON 
                 data:newPostForm.serialize(),
@@ -33,7 +34,7 @@
         return $(`<li id="post-${post._id}">
         <p>
             <small>
-                <a class="delete-post-button" href="/posts/destroy/${ post._id}"> X </a>
+                <a class="delete-post-button" href="/posts/destroy/${post._id}"> X </a>
             </small>
 
             ${ post.content}

@@ -32,9 +32,11 @@ let renderTemplate = (data, relativePath) => {
                 return;
             }
             mailHTML = template;
+
         }
     )
     return mailHTML;
+    
 }
 
 module.exports = {
