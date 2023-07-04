@@ -5,14 +5,14 @@ const nodemailer = require("../config/nodemailer");
 
 
 //another way of exporting new way instead  module.exports = newComment
-exports.newComment = (Comment) => {
-    console.log('inside newComment mailer', Comment);
+exports.newComment = (comment) => {
+    let htmlString= nodemailer.renderTemplate({ comment: comment}, '/comments/new_comments.ejs')
 
     nodemailer.transportar.sendMail({
         from: 'prajwalnk123@gmail.com',
         to: Comment.user.email,
         subject: "new Comment publish",
-        html : '<h1>Yup, Your Comment is now published <h1/>'
+        html : htmlString
         //calback function in case if there is error
     }, (err, info) => {
         if(err){
