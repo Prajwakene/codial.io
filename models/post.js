@@ -20,6 +20,12 @@ const postSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'Comment'
         }
+    ],
+    likes: [
+        {
+            type:mongoose.Schema.ObjectId,
+            ref:'Like'
+        }
     ]
 },{
     //adding TINMESTAMP ...it is which automatically  interoduces two fields ,,,created at and updated at 

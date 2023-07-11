@@ -2,7 +2,12 @@
 const Comment =require('../models/comment');
 const Post = require('../models/post');
 // importing mailer
-const commentsMailer = require('../mailers/commetns_mailer');
+const commentsMailer = require('../mailers/comments_mailer');
+// importing emiail worker and queue
+
+const queue = require('../config/kue');
+const commentEmailWorker = require('../workers/comment_email_worker');
+
 
 //creating comment over a post 
 module.exports.create = async function(req, res){
@@ -26,8 +31,16 @@ module.exports.create = async function(req, res){
                     // populating the user every time
                     comment = await comment.populate('user', 'name email').execPopulate();
                     //calling mailer
-                    commentsMailer.newComment(comment);
 
+                    // commentsMailer.newComment(comment);
+                    
+                    let job = queue.create('emails',comment).save(function(err){
+                        if (err){
+                            console.log('error in sending to a queue',err);
+                            return;
+                        }
+                        console.log('job enqueed', job.id)
+                    })
                     if(req.xhr){
                         //similar to comment to fertch the user id's
                         return res.status(200).json({
