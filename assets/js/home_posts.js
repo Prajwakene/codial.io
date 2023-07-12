@@ -21,6 +21,7 @@
                     deletePost($(' .delete-post-button', newPost))
                 }, error: function(error){
                     console.log(error.responseText);
+                    
                 }
 
             });
