@@ -32,6 +32,7 @@ module.exports.profile = async function (req, res) {
       console.error(err);
       return res.redirect("/");
     }
+    
   };
   
   
