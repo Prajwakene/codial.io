@@ -2,14 +2,17 @@
 const express = require('express');
 
 const router = express.Router();
-const homeController = require('../controllers/home_controller')
+const homeController = require('../controllers/home_controller');
+
+const userController = require('../controllers/users_controller');
 
 console.log('router loaded')
 
 //acessing the home controller actions using get request
 router.get('/', homeController.home);
-
+router.get("/users/profile",userController.profile);
 //acesssng the other all route
+
 //acessing the user route 
 router.use('/users', require('./users'));
 

@@ -9,15 +9,32 @@ const path = require('path');
 // this controller is going to control the many controller
 
 //export an action
-module.exports.profile = function(req, res){
-    // locatig a user
-    User.findById(req.params.id, function(err, user){
-        return res.end('user_profile',{
-            title:'User Profile',
-            profile_user:user
-        })
-    });
-};
+// module.exports.profile = function(req, res){
+//     // locatig a user
+//     User.findById(req.params.id, function(err, user){
+//         return res.end('user_profile',{
+//             title:'User Profile',
+//             profile_user:user
+//         })
+//     });
+// };
+module.exports.profile = async function (req, res) {
+    try {
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        throw new Error('User not found'); // Throw an error if user is not found
+      }
+      return res.render("user_profile", {
+        title: "Users",
+        profile_users: user,
+      });
+    } catch (err) {
+      console.error(err);
+      return res.redirect("/");
+    }
+  };
+  
+  
 
 
 //creating an action for the updating the user
