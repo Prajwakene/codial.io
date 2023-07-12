@@ -1,87 +1,99 @@
-//importing
-const Comment =require('../models/comment');
+const Comment = require('../models/comment');
 const Post = require('../models/post');
-// importing mailer
 const commentsMailer = require('../mailers/comments_mailer');
-// importing emiail worker and queue
-
 const queue = require('../config/kue');
 const commentEmailWorker = require('../workers/comment_email_worker');
+const Like = require('../models/like');
 
-
-//creating comment over a post 
 module.exports.create = async function(req, res){
-    //for that finding if the post is exixt or not 
-    // if we find th epost handling the error using callback function
-    //after the comment is made the email would be send technically.
+
     try{
-        let post= await Post.findById(req.body.Post)
-            if(post){
-                let comment = await Comment.create({
-                    content:req.body.content,
-                    post:req.body.post,
-                    user:req.user._id
+        let post = await Post.findById(req.body.post);
+
+        if (post){
+            let comment = await Comment.create({
+                content: req.body.content,
+                post: req.body.post,
+                user: req.user._id
+            });
+
+            post.comments.push(comment);
+            post.save();
+            
+            comment = await comment.populate('user', 'name email').execPopulate();
+            // commentsMailer.newComment(comment);
+
+            let job = queue.create('emails', comment).save(function(err){
+                if (err){
+                    console.log('Error in sending to the queue', err);
+                    return;
+                }
+                console.log('job enqueued', job.id);
+
+            })
+
+            if (req.xhr){
+                
+    
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Post created!"
                 });
-                    //handle err
-                    post.comments.push(comment);
-                    //whenever we update something we need to call save after it
-                    //save will tell th DB that it is the final version ,so block it 
-                    post.save();
-
-                    // populating the user every time
-                    comment = await comment.populate('user', 'name email').execPopulate();
-                    //calling mailer
-
-                    // commentsMailer.newComment(comment);
-                    
-                    let job = queue.create('emails',comment).save(function(err){
-                        if (err){
-                            console.log('error in sending to a queue',err);
-                            return;
-                        }
-                        console.log('job enqueed', job.id)
-                    })
-                    if(req.xhr){
-                        //similar to comment to fertch the user id's
-                        return res.status(200).json({
-                            data: {
-                                comment: comment
-                            },
-                            message: "Post Created!"
-                        });
-                    }
-                    req.flash('success', 'comment published!')
-
-                    res.redirect('/')
             }
+
+
+            req.flash('success', 'Comment published!');
+
+            res.redirect('/');
+        }
     }catch(err){
-        console.log('Error', err);
+        req.flash('error', err);
         return;
     }
-};
+    
+}
 
 
+module.exports.destroy = async function(req, res){
 
-//we need to delete a comment 
-module.exports.destroy =async function(req, res){
     try{
-        let comment= await Comment.findById(req.params.id);
-        //check if the comment actually available or not
-        if(comment.user == req.user.id){
-            //before deleting a comment we nned to fetch the post id ,because we need to go inside that post and then delete it 
+        let comment = await Comment.findById(req.params.id);
+
+        if (comment.user == req.user.id){
+
             let postId = comment.post;
-            
+
             comment.remove();
-            //if comment was there the post must be there
-            //we need to pull out the comment from the list of the list of comment
-           let post= await  Post.findByIdAndUpdate(postId, { $pull:{comments:req.params.id}});
-                return res.redirect('back');
-            
+
+            let post = Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+
+            // CHANGE :: destroy the associated likes for this comment
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
+
+
+            // send the comment id which was deleted back to the views
+            if (req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment_id: req.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
+
+
+            req.flash('success', 'Comment deleted!');
+
+            return res.redirect('back');
         }else{
+            req.flash('error', 'Unauthorized');
             return res.redirect('back');
         }
     }catch(err){
-        console.log('Error',err);
+        req.flash('error', err);
         return;
     }
+    
 }

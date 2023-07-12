@@ -1,44 +1,48 @@
-const Post = require('../models/post')
+const Post = require('../models/post');
+const User = require('../models/user');
 
-//impoeting User...1st time using user
-const User = require('../models/user')
-// exporting a functon which is publically acess to my routes
+
+
 module.exports.home = async function(req, res){
-//    handling the error
-try{
-    let posts = await Post.find({})
+
+    try{
+        // CHANGE :: populate the likes of each post and comment
+        let posts = await Post.find({})
         .sort('-createdAt')
         .populate('user')
         .populate({
             path: 'comments',
             populate: {
                 path: 'user'
+            },
+            populate: {
+                path: 'likes'
             }
+        }).populate('comments')
+        .populate('likes');
+
+    
+        let users = await User.find({});
+
+        return res.render('home', {
+            title: "Codeial | Home",
+            posts:  posts,
+            all_users: users
         });
-    //  finding all the posts ..and populating the user of each posts...then callback
-//till .exec this is query too populate ...checkout in mongoose library
-     
-//executimg
-// .exec(function(err, posts){
- //finding all the user
- let users = await User.find({})
-    // , function(err, users){
-    //bolow code send to the browser
-    return res.render('home', {
-        title : "Codial | Home",
-        posts: posts,
-        //with this all th euser will hbe avialble to us
-        all_users:users
-        })
 
-}catch(err){
-    console.log('Error',err);
-    return;
+    }catch(err){
+        console.log('Error', err);
+        return;
     }
-};
-//there ar three to wtrite th code  1st way is th at the we written the code th code in the above manner
-// 2nd is the .then function here is the code ..ie promises
-// post.find({}).populate('comments').then(function());
+   
+}
 
-// let posts = post.find({}).populate('comments').then(function());
-// 3rd is the async Await
+// module.exports.actionName = function(req, res){}
+
+
+// using then
+// Post.find({}).populate('comments').then(function());
+
+// let posts = Post.find({}).populate('comments').exec();
+
+// posts.then()
