@@ -39,6 +39,7 @@ module.exports.destroy = async function(req, res){
                 return res.json(200, {
                     message: "Post and associated comments deleted successfully!"
                 });
+
             }
                 else{
                     return res.json(401, {
@@ -46,6 +47,7 @@ module.exports.destroy = async function(req, res){
                     });
                 };
     }catch(err){
+
         return res.json(500, {
             messege:"Internal Server Error"
         });
