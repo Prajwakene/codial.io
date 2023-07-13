@@ -30,8 +30,16 @@ const userSchema = new mongoose.Schema({
     },
     //fieldname avatar
     avatar : {
-        type : String
-    }
+        type: String
+    },
+    //array of friendship
+    // whether we send the request or receive the request we need to add that user in this array
+    friendships: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Friendship'
+        }
+    ]
 
 },{
     //to keep the count of two things when the user created at and updated at
