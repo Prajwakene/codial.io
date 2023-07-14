@@ -19,8 +19,17 @@ const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const passportJWT = require('./config/passport-jwt-strategy');
 const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
+
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
+
+//setup the chat server to be used with socket.io
+// importing http for the chat_sockets.js
+// http is inbuild module annd passing the app which is the expreess app
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log("chat server is listening on the port 5000")
 
 
 app.use(sassMiddleware({

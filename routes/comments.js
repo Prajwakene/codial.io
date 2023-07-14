@@ -4,8 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 //we are telling passport to authenticate user
-const passport =  require('passport')
-
+const passport =  require('passport');
 const commentsController = require('../controllers/comments_controller');
 
 
