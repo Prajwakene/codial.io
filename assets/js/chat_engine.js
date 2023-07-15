@@ -17,8 +17,22 @@ class ChatEngine{
 
     // 2)creating a connectionHandeler this will have the to and fro interacation between the observer and subscriber
     connectionHandler(){
+        //chat Room
+        // asking f the joining the room
+        let self = this;
         this.socket.on('connect',function(){
             console.log('connection established using socket...!');
+        
+            //sending an event
+            self.socket.emit('join_room', {
+                user_email : self.userEmail,
+                chatroom: 'codial'
+            });
+        
+            self.socket.on('user_joined', function(data){
+                console.log('a user joined', data)
+            })
+        
         });
     }
 
