@@ -6,12 +6,14 @@ const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 // since we  are using the user model fr authentication .whenever we going to establish the identity of user wiill be needing the user model
 const User  = require('../models/user');
+// Importing environment
+const env = require('./environment')
 
 //while defining the JWT strategy we need to have the option 1)encryption
 let opts = {
     //eccryption and decryption key 
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey:'codial'
+    secretOrKey: env.jwt_secret
 }
 
 //done is calback function

@@ -8,13 +8,15 @@ const googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const crypto = require('crypto');
 //importing user\
 const User = require('../models/user');
-const { model } = require('mongoose');
+const env = require('./environment');
+
+// const { model } = require('mongoose');
 
 //telling passport to use the new Strategy for google login
 passport.use(new googleStrategy({
-    clientID:"668723213895-arldcq5ii6593tfme8evfc5jpn2db9h3.apps.googleusercontent.com",
-    clientSecret: "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",
-    callbackURL: "http://localhost:8000/users/auth/google/callback"
+    clientID: env.google_client_id,
+    clientSecret: env.google_client_Secret,
+    callbackURL: env.google_call_back_url
 },
 //callback fucction
 //this access toaken is created as jwt access token//google is generate the access token that we were ,,,,in case  the accessToken is expired then we can use this refresh token to the access token  without asking the t login again

@@ -1,7 +1,8 @@
 const mongoose =require('mongoose');
-
+// importing environment file
+const env = require('./environment')
 //incase of localhost we can write as 127.0.0.1 ...ipp adress of updated nopde  
-mongoose.connect('mongodb://127.0.0.1/codial_developement');
+mongoose.connect(`mongodb://127.0.0.1/${env.db}`);
 // mongoose.set('strictQuery', false);
 const db = mongoose.connection;
 

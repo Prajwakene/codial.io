@@ -1,22 +1,17 @@
 // importing nodemailer ejs path as thjey require to set up the nodemailer
 const nodemailer = require('nodemailer');
 
+//importing environment files
+const env = require('./environment')
 //importing ejs
 const ejs = require('ejs');
 //importing path
 const path = require('path');
 
-// defining transportar it is object willl attch it to the node mailer
-let transportar = nodemailer.createTransport({
-    service: 'gmail',
-    host:'smtp.gmail.com',
-    port:587,
-    secure:'false',
-    auth:{
-        user:'prajwalnk123@gmail.com',
-        password:'Prajwal@123'
-    }
-});
+// defining transportar it is SMTP object willl attch it to the node mailer
+//copying th whole object for environment 
+// smtp object in the enivonment.js
+let transportar = nodemailer.createTransport(env.smtp);
 
 
 //..wee are telling that we are using the EJS for rendering HTML tenplate 

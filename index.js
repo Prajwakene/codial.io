@@ -33,11 +33,15 @@ const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000);
 console.log("chat server is listening on the port 5000")
 
+const path = require('path')
 
 
+// CHANGE:: CHANGING regarding the environment
 app.use(sassMiddleware({
-    src: './assets/scss',
-    dest: './assets/css',
+    // src: './assets/scss',
+    src: path.join(__dirname, env.asset_path, '/scss'),
+    // dest: './assets/css',
+    dest: path.join(__dirname, env.asset_path, '/css'),
     debug: true,
     outputStyle: 'extended',
     prefix: '/css'
@@ -67,7 +71,8 @@ app.set('views', './views');
 app.use(session({
     name: 'codeial',
     // TODO change the secret before deployment in production mode
-    secret: 'blahsomething',
+    // secret: 'blahsomething',
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {
