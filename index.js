@@ -1,6 +1,8 @@
 // import all the requires packages whatever is necessary 
 //1
 const express = require('express');
+//importing enivironment files to accesst the path from environment
+const env = require('./config/environment')
 const cookieParser = require('cookie-parser');
 //2
 const app = express();
@@ -44,7 +46,7 @@ app.use(express.urlencoded());
 
 app.use(cookieParser());
 
-app.use(express.static('./assets'));
+app.use(express.static(env.asset_path));
 
 //joining th e patrh
 //make the uploads path avbailable to the browser

@@ -1,3 +1,10 @@
 body{
-    background-color: rgb(7, 105, 137);
+    background-color:lightblue;
+    h1{
+        text-align: center;
+    }
+    p{
+        display: flex;
+        justify-content: space-between;
+    }
 }

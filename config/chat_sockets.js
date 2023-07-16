@@ -1,31 +1,30 @@
+module.exports.chatSockets = function (socketServer) {
 
-// this file will be communicating with the server end side 
-// it going to receive the incomming connetions ...observer and subscriber pattern
-module.exports.chatSockets= function(socketServer){
+    const io = require('socket.io')(socketServer, {
+        cors: {
+            origin: "http://localhost:8000",
+            methods: ["GET", "POST"]
+        }
+    });
+    io.on('connection', function (socket) {
+        console.log('new connection received', socket.id);
 
-    // receiving the request for connection     
-    let io = require('socket.io')(socketServer);
-
-    io.sockets.on('connection', function(socket){
-        cosnole.log('new connection received', socket.id);
-
-
-        // another event whenever the client is disconnect an autonatic disconnect event is fired
-        socket.on('disconnect', function(){
-            cosnole.log('socket disconnected')
+        socket.on('disconnect', function () {
+            console.log('socket disconnected');
+            return;
         });
 
-        //detecting an event
-        socket.on('join_room', function(data){
-            cosnole.log('joining request rec.', data);
+        socket.on('join_room', function (data) {
+            // console.log('Joining request rec.', data);
 
-            //when th ejoining request aha sbeen received i just want that user to ber joined the socket to be that particular room
-            socket.join(data.chartroom);
+            socket.join(data.chatroom);
 
-            //whle we wqant to emit in a specific chat room we do emit 
-            io.in(data.chartroom).emit('user_joined', data)
+            io.in(data.chatroom).emit('user_joined', data);
+        });
 
+        socket.on('send_message', function(data){
+            io.in(data.chatroom).emit('receive_message', data);
+        });
     });
-
-});
 }
+
