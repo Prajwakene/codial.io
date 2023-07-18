@@ -29,7 +29,8 @@ const developement = {
 
 // 2)
 const production = {
-    name: 'production'
+    name: 'production',
+    
 }
 
 // 3)

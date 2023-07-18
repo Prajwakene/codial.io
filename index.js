@@ -4,6 +4,9 @@ const express = require('express');
 //importing enivironment files to accesst the path from environment
 const env = require('./config/environment')
 const cookieParser = require('cookie-parser');
+//for environment
+const dotEnv = require('dotenv');
+dotEnv.config();
 //2
 const app = express();
 //3
@@ -102,7 +105,7 @@ app.use(customMware.setFlash);
 app.use('/', require('./routes'));
 
 //4 start the server so that we can listen req and response 
-app.listen(port, function(err){
+app.listen(process.env.PORT, function(err){
     if (err){
         console.log(`Error in running the server: ${err}`);
     }
