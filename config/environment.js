@@ -31,28 +31,31 @@ const developement = {
 const production = {
     name: 'production',
     // asset_path: './assets',
-    asset_path: './assets',
+    asset_path: process.env.CODIAL_ASSET_PATH,
     //creating an key sesssion_cookie_key for the static files that we put in the index.js
 
     // RandomKeyGen=>CodeIgniter Encryption Keys - Can be used for any other 256-bit key requirement.
-    session_cookie_key: 'Xx3FVaKKIqRuqC2baW9Y6769UgGM3EPy',
-    db: 'codial_production',
+    // this kwy will go in tot he bash profile
+    session_cookie_key: 'process.env.CODIAL_SESSION_COOKIE_KEY',
+    db: 'process.env.CODIAL_DB',
     smtp: {
         service: 'gmail',
         host:'smtp.gmail.com',
         port:587,
         secure:'false',
         auth:{
-            user:'prajwalnk123@gmail.com',
-            password:'Prajwal@123'
+            // user:'prajwalnk123@gmail.com',
+            // password:'Prajwal@123'
+            user:'process.env.CODIAL_GMAIL_USERNAME',
+            password:'process.env.CODIAL_GMAIL_PASSWORD'
         }
     },//this are the passport-google-oauth2-strategy.js
-    google_client_id:"668723213895-arldcq5ii6593tfme8evfc5jpn2db9h3.apps.googleusercontent.com",
-    google_client_Secret: "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",
-    google_call_back_url: "http://codial.com/users/auth/google/callback",
+    google_client_id:"process.env.GOOGLE_CLIENT_ID",
+    google_client_Secret: "process.env.GOOGLE_CLIENT_SECRET",
+    google_call_back_url: "process.env.GOOGLE_CALL_BACK_URL",
 
     // RandomKeyGen=>CodeIgniter Encryption Keys - Can be used for any other 256-bit key requirement.
-    jwt_secret: '73zqtUIEGQk8plXfp7vbhIFeaGAHhNiU'
+    jwt_secret: 'process.env.CODIAL_JWT_SECRET'
 
     
 }
