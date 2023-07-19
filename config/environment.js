@@ -50,9 +50,9 @@ const production = {
             password:'process.env.CODIAL_GMAIL_PASSWORD'
         }
     },//this are the passport-google-oauth2-strategy.js
-    google_client_id:"process.env.GOOGLE_CLIENT_ID",
-    google_client_Secret: "process.env.GOOGLE_CLIENT_SECRET",
-    google_call_back_url: "process.env.GOOGLE_CALL_BACK_URL",
+    google_client_id:"process.env.CODIAL_GOOGLE_CLIENT_ID",
+    google_client_Secret: "process.env.CODIAL_GOOGLE_CLIENT_SECRET",
+    google_call_back_url: "process.env.CODIAL_GOOGLE_CALL_BACK_URL",
 
     // RandomKeyGen=>CodeIgniter Encryption Keys - Can be used for any other 256-bit key requirement.
     jwt_secret: 'process.env.CODIAL_JWT_SECRET'
