@@ -2,7 +2,9 @@
 //1
 const express = require('express');
 //importing enivironment files to accesst the path from environment
-const env = require('./config/environment')
+const env = require('./config/environment');
+//importing morgon for the creating logging in production 
+const logger  = require('morgan')
 const cookieParser = require('cookie-parser');
 //for environment
 const dotEnv = require('dotenv');
@@ -38,8 +40,9 @@ console.log("chat server is listening on the port 5000")
 
 const path = require('path')
 
-
-// CHANGE:: CHANGING regarding the environment
+// evvery time this sassMiddleware is runnning so we are keeping ckeck to run only when the production environnment is running
+if(env.name == "developement"){
+    // CHANGE:: CHANGING regarding the environment
 app.use(sassMiddleware({
     // src: './assets/scss',
     src: path.join(__dirname, env.asset_path, '/scss'),
@@ -49,6 +52,8 @@ app.use(sassMiddleware({
     outputStyle: 'extended',
     prefix: '/css'
 }));
+}
+
 app.use(express.urlencoded());
 
 app.use(cookieParser());
@@ -57,7 +62,9 @@ app.use(express.static(env.asset_path));
 
 //joining th e patrh
 //make the uploads path avbailable to the browser
-app.use('/uploads', express.static(__dirname + '/uploads'))
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
+app.use(logger(env.morgan.mode, env.morgon.options));
 app.use(expressLayouts);
 // extract style and scripts from sub pages into the layout
 app.set('layout extractStyles', true);

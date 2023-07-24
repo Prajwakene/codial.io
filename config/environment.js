@@ -1,3 +1,23 @@
+// importing file system
+const fs = require('fs');
+// importing rotating-file-stream
+const rfs = require('rotating-file-stream');
+// creating path
+const path = require('path');
+
+// to store our logs
+const logDirectory = path.join(__dirname, '../production_logs');
+
+// finding if the productionLogs are available or created (if it does not exist)
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+//as user is acesssing my website
+const acessLogStream = rfs('access.log', {
+    //interval of 1 day
+    interval: '1d',
+    //path to storte the logs after each day 
+    path: logDirectory
+}) 
 // this file will contain the environment like production and developement
 // defining two objects developement and production
 // 1)
@@ -22,8 +42,12 @@ const developement = {
     google_client_id:"668723213895-arldcq5ii6593tfme8evfc5jpn2db9h3.apps.googleusercontent.com",
     google_client_Secret: "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",
     google_call_back_url: "http://localhost:8000/users/auth/google/callback",
-    jwt_secret: 'codial'
-
+    jwt_secret: 'codial',
+    //importing all in th environment
+    morgan: {
+        mode: 'dev',
+        options: {stream : acessLogStream}
+    }
 }
 
 
@@ -37,7 +61,8 @@ const production = {
     // RandomKeyGen=>CodeIgniter Encryption Keys - Can be used for any other 256-bit key requirement.
     // this kwy will go in tot he bash profile
     session_cookie_key: 'process.env.CODIAL_SESSION_COOKIE_KEY',
-    db: 'process.env.CODIAL_DB',
+    db: process.env.CODIAL_DB,
+    // db: 'codial_production',
     smtp: {
         service: 'gmail',
         host:'smtp.gmail.com',
@@ -55,9 +80,12 @@ const production = {
     google_call_back_url: "process.env.CODIAL_GOOGLE_CALL_BACK_URL",
 
     // RandomKeyGen=>CodeIgniter Encryption Keys - Can be used for any other 256-bit key requirement.
-    jwt_secret: 'process.env.CODIAL_JWT_SECRET'
-
-    
+    jwt_secret: 'process.env.CODIAL_JWT_SECRET',
+    //importing all in th environment
+    morgan: {
+        mode: 'combined',
+        options: {stream : acessLogStream}
+    }
 }
 
 // 3)
