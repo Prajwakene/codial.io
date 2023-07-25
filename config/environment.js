@@ -8,16 +8,14 @@ const path = require('path');
 // to store our logs
 const logDirectory = path.join(__dirname, '../production_logs');
 
-// finding if the productionLogs are available or created (if it does not exist)
+// finding if the productionLogs are exixst or created (if it does not exist)
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
 //as user is acesssing my website
-const acessLogStream = rfs('access.log', {
-    //interval of 1 day
+const accessLogStream = rfs.createStream('access.log', {
     interval: '1d',
-    //path to storte the logs after each day 
     path: logDirectory
-}) 
+}); 
 // this file will contain the environment like production and developement
 // defining two objects developement and production
 // 1)
@@ -46,7 +44,7 @@ const developement = {
     //importing all in th environment
     morgan: {
         mode: 'dev',
-        options: {stream : acessLogStream}
+        options: {stream : accessLogStream}
     }
 }
 
@@ -54,8 +52,8 @@ const developement = {
 // 2)
 const production = {
     name: 'production',
-    // asset_path: './assets',
-    asset_path: process.env.CODIAL_ASSET_PATH,
+    asset_path: './assets',
+    // asset_path: process.env.CODIAL_ASSET_PATH,
     //creating an key sesssion_cookie_key for the static files that we put in the index.js
 
     // RandomKeyGen=>CodeIgniter Encryption Keys - Can be used for any other 256-bit key requirement.
@@ -84,9 +82,10 @@ const production = {
     //importing all in th environment
     morgan: {
         mode: 'combined',
-        options: {stream : acessLogStream}
+        options: {stream : accessLogStream}
     }
 }
 
 // 3)
 module.exports = eval(process.env.CODIAL_ENVIRONMENT) == undefined ? developement : eval(process.env.CODIAL_ENVIRONMENT);
+// module.exports = developement;
