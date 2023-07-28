@@ -1,8 +1,16 @@
 {
+  "assets/js/chat_engine-a438da78ca.js": "assets/js/chat_engine-a438da78ca-a438da78ca.js",
+  "assets/js/home_post_comments-17d4d4c772.js": "assets/js/home_post_comments-17d4d4c772-af1c737d2a.js",
+  "assets/js/home_posts-1a633d8412.js": "assets/js/home_posts-1a633d8412-1a633d8412.js",
+  "assets/js/toggle_likes-0e3d81481c.js": "assets/js/toggle_likes-0e3d81481c-0e3d81481c.js",
   "css/chat_box.css": "css/chat_box-ded5f72cd3.css",
   "css/footer.css": "css/footer-80b8801692.css",
   "css/header.css": "css/header-e369a7a893.css",
   "css/home.css": "css/home-258528c3f7.css",
   "css/layout.css": "css/layout-6a0c73ee31.css",
-  "css/users_profile.css": "css/users_profile-a6dcf59d08.css"
+  "css/users_profile.css": "css/users_profile-a6dcf59d08.css",
+  "js/chat_engine.js": "js/chat_engine-a438da78ca.js",
+  "js/home_post_comments.js": "js/home_post_comments-17d4d4c772.js",
+  "js/home_posts.js": "js/home_posts-1a633d8412.js",
+  "js/toggle_likes.js": "js/toggle_likes-0e3d81481c.js"
 }

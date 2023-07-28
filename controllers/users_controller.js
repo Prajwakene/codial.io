@@ -22,7 +22,8 @@ module.exports.profile = async function (req, res) {
     try {
       const user = await User.findById(req.params.id);
       if (!user) {
-        throw new Error('User not found'); // Throw an error if user is not found
+        throw new Error('User not found');
+         // Throw an error if user is not found
       }
       return res.render("user_profile", {
         title: "Users",

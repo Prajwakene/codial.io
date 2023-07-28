@@ -4,13 +4,16 @@ const express = require('express');
 //importing enivironment files to accesst the path from environment
 const env = require('./config/environment');
 //importing morgon for the creating logging in production 
-const logger  = require('morgan')
+const logger  = require('morgan');
+
+
 const cookieParser = require('cookie-parser');
 //for environment
 const dotEnv = require('dotenv');
 dotEnv.config();
 //2
 const app = express();
+require('./config/view-helpers')(app);
 //3
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');

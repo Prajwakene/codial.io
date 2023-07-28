@@ -1,11 +1,14 @@
 const gulp =require('gulp');
-
 const sass = require('gulp-sass')(require('sass'));
-const cssnano = require('gulp-cssnano');
+const cssnano = require('gulp-cssnano')
 const rev = require('gulp-rev');
 const uglify = require('gulp-uglify-es').default;
 const imagemin = require('gulp-imagemin');
-const del = require('del').default;
+// ES module are not supported by the require() 
+const del = require('del');
+// import del from 'del'
+// const del = await import('del')
+
 
 //gulp takaes the task for css
 gulp.task ('css', function(done){
@@ -53,7 +56,7 @@ gulp.task ('js', function(done){
 });
 
 //gulp takaes the task for images
-gulp.task ('imgges', function(done){
+gulp.task ('images', function(done){
     console.log("compressing images...");
     // ** means any file and any folder inside it 
     //rejex ..we define a patterns which matches  a string
